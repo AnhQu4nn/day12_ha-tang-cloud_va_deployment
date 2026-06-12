@@ -111,5 +111,19 @@ COPY --from=builder ...        # copy chỉ /site-packages
 ## Câu hỏi thảo luận
 
 1. Tại sao `COPY requirements.txt .` rồi `RUN pip install` TRƯỚC khi `COPY . .`?
+   - **Trả lời:** Để tận dụng Docker layer cache. Dependencies thường ít thay đổi hơn source code, nên nếu chỉ sửa code app thì Docker có thể dùng lại layer `pip install` cũ thay vì cài lại toàn bộ packages. Build sẽ nhanh hơn và ổn định hơn.
+
 2. `.dockerignore` nên chứa những gì? Tại sao `venv/` và `.env` quan trọng?
+   - **Trả lời:** `.dockerignore` nên chứa `venv/`, `.env`, `.git/`, `__pycache__/`, `.pytest_cache/`, logs, build artifacts và file local không cần trong image. `venv/` quan trọng vì nó rất nặng và có thể chứa dependencies build cho OS khác; image nên tự cài dependencies từ `requirements.txt`. `.env` quan trọng vì thường chứa secrets như API key, password, token, không được copy vào image hoặc commit lên git.
+
 3. Nếu agent cần đọc file từ disk, làm sao mount volume vào container?
+   - **Trả lời:** Dùng Docker volume hoặc bind mount. Ví dụ với `docker run`:
+     ```bash
+     docker run -p 8000:8000 -v ./data:/app/data:ro agent-develop
+     ```
+     Trong Docker Compose:
+     ```yaml
+     volumes:
+       - ./data:/app/data:ro
+     ```
+     `:ro` nghĩa là read-only, phù hợp nếu agent chỉ cần đọc file.

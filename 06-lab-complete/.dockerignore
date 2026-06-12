@@ -7,5 +7,6 @@ venv/
 .venv/
 .git/
 *.md
+!Day09-MultiAgent-Architecture/data/policy_mock_vi.md
 tests/
 .DS_Store

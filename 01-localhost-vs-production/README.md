@@ -67,5 +67,10 @@ python app.py
 ## Câu hỏi thảo luận
 
 1. Điều gì xảy ra nếu bạn push code với API key hardcode lên GitHub public?
+   - **Trả lời:** API key có thể bị bot hoặc người khác quét được và dùng trái phép. Hậu quả là rò rỉ quyền truy cập, phát sinh chi phí, hoặc bị gọi API để spam/abuse. Khi lỡ commit key, cần revoke/rotate key ngay, tạo key mới qua environment variables, kiểm tra logs/usage, và xoá secret khỏi git history nếu repo public.
+
 2. Tại sao stateless quan trọng khi scale?
+   - **Trả lời:** Khi scale nhiều instances, load balancer có thể gửi mỗi request đến một instance khác nhau. Nếu state lưu trong memory của từng instance, user sẽ mất session/conversation khi request chuyển instance hoặc container restart. Stateless design giúp mọi instance xử lý request như nhau vì state được lưu ở Redis/DB/shared storage.
+
 3. 12-factor nói "dev/prod parity" — nghĩa là gì trong thực tế?
+   - **Trả lời:** Nghĩa là môi trường development, staging và production nên giống nhau nhất có thể: cùng runtime version, dependency version, cách config bằng environment variables, service phụ trợ tương tự, và quy trình deploy gần giống production. Mục tiêu là giảm lỗi kiểu "chạy trên máy em được nhưng lên production thì fail".
