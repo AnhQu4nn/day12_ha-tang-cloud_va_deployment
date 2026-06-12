@@ -33,4 +33,6 @@ Thumbs.db
 
 # ── Docker volumes (local dev) ─────────────────────��──────
 data/
+!06-lab-complete/Day09-MultiAgent-Architecture/data/
+!06-lab-complete/Day09-MultiAgent-Architecture/data/**
 volumes/
