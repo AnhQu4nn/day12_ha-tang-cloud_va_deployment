@@ -25,9 +25,8 @@ WORKDIR /app
 # Copy packages từ builder
 COPY --from=builder /root/.local /home/agent/.local
 
-# Copy application and Day09 demo data
+# Copy application and bundled demo data
 COPY app/ ./app/
-COPY Day09-MultiAgent-Architecture/data/ ./Day09-MultiAgent-Architecture/data/
 
 RUN chown -R agent:agent /app
 

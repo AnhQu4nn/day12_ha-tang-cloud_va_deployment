@@ -8,8 +8,11 @@ from pathlib import Path
 from typing import Any
 
 
+APP_DIR = Path(__file__).resolve().parent
+RUNTIME_DATA_DIR = APP_DIR / "demo_data"
 DAY09_ROOT = Path(__file__).resolve().parents[1] / "Day09-MultiAgent-Architecture"
-DATA_DIR = DAY09_ROOT / "data"
+DAY09_DATA_DIR = DAY09_ROOT / "data"
+DATA_DIR = RUNTIME_DATA_DIR if RUNTIME_DATA_DIR.exists() else DAY09_DATA_DIR
 POLICY_PATH = DATA_DIR / "policy_mock_vi.md"
 ORDERS_PATH = DATA_DIR / "order_customer_mock_data.json"
 
